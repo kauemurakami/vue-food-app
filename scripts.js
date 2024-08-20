@@ -69,7 +69,18 @@ const SelfServiceMachine = { // o que carrega toda logica da aplicação
 	data() {
 		return { products: window.products }
 	},
-	
+	methods: {
+		total: function(){
+			var total = 0
+
+			this.products.forEach(product => {
+				if(product.active){
+					total += product.quantity * product.price
+				}
+			});
+			return total.toFixed(2)
+		}
+	}
 }
 
 Vue.createApp(SelfServiceMachine).mount('#app') //seletor css e o id app <main id="app"> no index html
