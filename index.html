@@ -19,31 +19,35 @@
 			<h4>Pick your items</h4>
 			<div 
 				v-for="product in products" 
-				class="product"
-				@click="product.active= !product.active" 
-				:class="{selected: product.active }"
+				class="product" 
+				@click="product.active = !product.active"
+				:class="{ selected: product.active }"
 			>
-			<!--  podemos usar codigos js dentro das diretivas 
+				<!--  podemos usar codigos js dentro das diretivas 
 				v-on:click  / @click (mesmo efeito)
 			-->
-			<!-- Style bind, interligação de class
+				<!-- Style bind, interligação de class
 				para criar remover ou adicionar classes de estilo dinamicos
 				com v-bind que é o mesmo de :
 			-->
 				<div class="photo">
-				<!-- quando é dentro de um atributo nao se usa duplas chaves {{}} 
+					<!-- quando é dentro de um atributo nao se usa duplas chaves {{}} 
 					atributos dinamicos inclui-se os dois pontos :<attr>
 					: é uma abreviação de v-bind 
 				-->
-					<img :src="product.photo"> 
+					<img :src="product.photo">
 				</div>
 				<div class="description">
 					<span class="name">{{ product.name }}</span>
 					<span class="price">{{ product.price }}</span>
-					<div class="quantity-area">
-						<button>-</button>
+					<div class="quantity-area" v-if="product.active">
+						<button @click.stop="product.quantity--" :disabled="product.quantity == 0">-</button>
 						<span class="quantity">{{ product.quantity }}</span>
-						<button>+</button>
+						<button @click.stop="product.quantity++">+</button>
+						<!-- @click.stop faz com que a atualização 
+							nao se propague para outros elementos (pai)
+							a ação sera refletida apenas no local desejado
+						-->
 					</div>
 				</div>
 			</div>
